@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class Latihan_06 {
+	public static void main(String[] args) {
+		int usia;
+		
+		System.out.print("Masukkan Usia : ");
+		Scanner input = new Scanner(System.in);
+		usia = input.nextInt();
+		
+		System.out.print("Masukkan Nama : ");
+		Scanner input_nama = new Scanner(System.in);
+		String nama_depan = input_nama.nextLine();
+		
+		input.close();
+	}
+}

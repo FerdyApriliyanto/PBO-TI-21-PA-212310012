@@ -1,0 +1,23 @@
+class Layang {
+	public void luas_layang (int d1, int d2) {
+		int luas;
+			
+		luas = 1/2 * d1 *d2;
+		System.out.println("Luas Layang Layang = " + luas);
+	}
+		
+	public void keliling_layang (int a,int b,int c,int d) {
+		int keliling;
+			
+		keliling = a + b + c + d;
+	}
+}
+	
+public class Latihan_03 {
+
+	public static void main(String[] args) {
+		Layang layangObj1 = new Layang();
+		layangObj1.luas_layang(2, 10);
+		layangObj1.keliling_layang(1,2,3,4);
+	}
+}
