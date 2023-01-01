@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.ibik.pbo.praktikum.dao.Student;
+import com.ibik.pbo.praktikum.dao.StudentDao;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -25,6 +29,9 @@ public class Register extends JFrame {
 	private JTextField field_Fullname;
 	private JTextField field_Phone;
 	private JLabel label_Gender;
+	private JTextField field_Password;
+	String gender = "";
+	String citizenship = "";
 
 	/**
 	 * Launch the application.
@@ -49,7 +56,7 @@ public class Register extends JFrame {
 		setTitle("Register");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 256, 241);
+		setBounds(100, 100, 265, 284);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -118,23 +125,50 @@ public class Register extends JFrame {
 					JOptionPane.showMessageDialog(null, "Data tidak boleh kosong. Silakan periksa kembali\r\n"
 							+ "isian anda","Error",JOptionPane.ERROR_MESSAGE);
 				}else {
-					String gender;
 					if (rb_Female.isSelected() == true) {
 						gender = "Female";
 					}else {
 						gender = "Male";
 					}
 					JOptionPane.showMessageDialog(null, label_Fullname.getText() + " : " + field_Fullname.getText() + "\n" + label_Email.getText() + " : " + field_Email.getText() +  "\n" + label_Phone.getText() + " : " + field_Phone.getText()  +  "\n" + label_Gender.getText() + " : " + gender + "\n" + label_Citizenship.getText() + " : " + cb_Citizenship.getSelectedItem());
-					dispose();
-					new Login().setVisible(true);
+					citizenship = (String) cb_Citizenship.getSelectedItem();
+					
+					try {
+						Insert();
+						JOptionPane.showMessageDialog(null, "Berhasil Disimpan!");
+						new Login().setVisible(true);
+						dispose();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Gagal Menyimpan!"+e1.getMessage());
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
-		button_Submit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		button_Submit.setBounds(79, 160, 136, 30);
+		
+		button_Submit.setBounds(82, 191, 136, 30);
 		contentPane.add(button_Submit);
+		
+		JLabel label_Password = new JLabel("Password");
+		label_Password.setBounds(26, 163, 46, 14);
+		contentPane.add(label_Password);
+		
+		field_Password = new JTextField();
+		field_Password.setColumns(10);
+		field_Password.setBounds(82, 160, 133, 20);
+		contentPane.add(field_Password);
+	}
+	
+	private void Insert() throws Exception {
+		Student student1 = new Student();
+		student1.setFullname(field_Fullname.getText());
+		student1.setEmail(field_Email.getText());
+		student1.setPhone(field_Phone.getText());
+		student1.setGender(gender);
+		student1.setCitizenship(citizenship);
+		student1.setPassword(field_Password.getText());
+		
+		StudentDao studentdao1 = new StudentDao();
+		studentdao1.saved(student1);
 	}
 }
